@@ -32,8 +32,8 @@ extension ViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
         guard let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
         
         var image = CIImage(cvPixelBuffer: imageBuffer, options: nil)
-        
-        CIDetector.rectangle?.features(in: image, options: [CIDetectorAccuracy: CIDetectorAccuracyHigh, CIDetectorAspectRatio: 1, CIDetectorImageOrientation : 6, CIDetectorNumberOfAngles: 1]).forEach{ f in
+    
+        CIDetector.rectangle?.features(in: image, options: [CIDetectorAccuracy: CIDetectorAccuracyHigh, CIDetectorAspectRatio: NSNumber(value: 1), CIDetectorImageOrientation : NSNumber(value: 6.0), CIDetectorFocalLength: NSNumber(value: 0.0)]).forEach{ f in
             if let feature = f as? CIRectangleFeature {
                 feature.perspectiveOverlay(on: image, with: CIColor.redTone).flatMap{
                     image = $0
@@ -41,7 +41,7 @@ extension ViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
             }
         }
         
-        CIDetector.text?.features(in: image, options: [CIDetectorAccuracy: CIDetectorAccuracyHigh, CIDetectorImageOrientation : 6]).forEach{ f in
+        CIDetector.text?.features(in: image, options: [CIDetectorAccuracy: CIDetectorAccuracyHigh, CIDetectorImageOrientation : NSNumber(value: 6.0), CIDetectorFocalLength: NSNumber(value: 0.0)]).forEach{ f in
             if let feature = f as? CITextFeature {
                 feature.perspectiveOverlay(on: image, with: CIColor.blueTone).flatMap{
                     image = $0

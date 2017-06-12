@@ -6,7 +6,7 @@ struct Camera {
     
     var session = AVCaptureSession()
     
-    fileprivate var sessionPreset = AVCaptureSessionPresetMedium
+    fileprivate var sessionPreset = AVCaptureSessionPresetHigh
     
     fileprivate var sessionInput: AVCaptureDeviceInput! = {
         let device = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
@@ -16,7 +16,6 @@ struct Camera {
     fileprivate var sessionOutput: AVCaptureVideoDataOutput! = {
         let output = AVCaptureVideoDataOutput()
         output.videoSettings = [ kCVPixelBufferPixelFormatTypeKey as AnyHashable: kCVPixelFormatType_32BGRA]
-        output.alwaysDiscardsLateVideoFrames = true
         return output
     }()
     
