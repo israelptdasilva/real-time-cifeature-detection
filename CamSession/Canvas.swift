@@ -4,22 +4,25 @@ struct Canvas {
     
     // MARK: - Properties
     
-    fileprivate var glkView: GLKView!
+    fileprivate var glkView: GLKView = {
+        let view = GLKView(frame: .zero, context: EAGLContext(api: .openGLES2))
+        view.transform = CGAffineTransform(rotationAngle: .pi / 2)
+        return view
+    }()
     
-    fileprivate let extent: CGRect!
+    fileprivate var extent: CGRect!
     
     fileprivate var ciContext: CIContext!
+    
+    fileprivate var glContext: EAGLContext!
     
     // MARK: - Initializer
     
     init(superview: UIView) {
-        glkView = GLKView(frame: .zero, context: EAGLContext(api: .openGLES2))
         glkView.frame = superview.frame
-        glkView.transform = CGAffineTransform(rotationAngle: .pi / 2)
-        superview.addSubview(glkView)
-        
-        ciContext = CIContext(eaglContext: glkView.context)
         glkView.bindDrawable()
+        superview.addSubview(glkView)
+        ciContext = CIContext(eaglContext: glkView.context)
         extent = CGRect(x: 0, y: 0, width: glkView.drawableWidth, height: glkView.drawableHeight)
     }
     
