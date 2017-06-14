@@ -11,7 +11,7 @@ protocol Measurable {
 extension Measurable {
     func perspectiveOverlay(on image: CIImage, with color: CIColor) -> CIImage? {
         var overlay = CIImage(color: color)
-        overlay = overlay.cropping(to: image.extent)
+        overlay = overlay.cropping(to: bounds)
         overlay = overlay.applyingFilter(
             "CIPerspectiveTransformWithExtent",
             withInputParameters: [
@@ -21,6 +21,6 @@ extension Measurable {
                 "inputBottomLeft": CIVector(cgPoint: bottomLeft),
                 "inputBottomRight": CIVector(cgPoint: bottomRight)])
         
-        return overlay.compositingOverImage(image)
+        return overlay
     }
 }

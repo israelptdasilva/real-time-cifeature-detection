@@ -13,6 +13,7 @@ extension CIDetector {
     }()
 }
 
+
 extension CIColor {
     static let redTone: CIColor = {
         return CIColor(red: 1.0, green: 0, blue: 0, alpha: 0.5)

@@ -1,4 +1,5 @@
 import AVFoundation
+import UIKit
 
 struct Camera {
     
@@ -19,9 +20,15 @@ struct Camera {
         return output
     }()
     
+    fileprivate var preview: AVCaptureVideoPreviewLayer!
+    
     // MARK: - Initializer
+    
+    init(_ superview: UIView, delegate: AVCaptureVideoDataOutputSampleBufferDelegate) {
+        preview = AVCaptureVideoPreviewLayer(session: session)
+        preview.frame = superview.bounds
+        superview.layer.addSublayer(preview)
 
-    init(delegate: AVCaptureVideoDataOutputSampleBufferDelegate) {
         session.beginConfiguration()
         if session.canAddInput(sessionInput) {
             session.addInput(sessionInput)
